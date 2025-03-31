@@ -29,9 +29,6 @@ function getHumanChoice () {
    return humanChoice;
 }
 
-let humanScore = 0;
-let computerScore = 0;
-
 // Your game will be played round by round. You will write a function that takes the human and computer player choices as arguments, plays a single round, increments the round winner’s score and logs a winner announcement.
 
 //now i need a function that will compare the human and machine's choice. Whoever is the winner of that round will get a point, which will be incremented to one of the two variables: humanScore or computerScore
@@ -55,44 +52,58 @@ let computerScore = 0;
 6. if machine wins, machineScore incremented by one
 */
 
-let computerChoice = getComputerChoice();
-let humanChoice = getHumanChoice();
+function playGame () {
+   let humanScore = 0;
+   let computerScore = 0;
 
-function playRound (computerChoice, humanChoice) {
+   let computerChoice = getComputerChoice();
+   let humanChoice = getHumanChoice();
    humanChoice = humanChoice.toLowerCase();
 
-   if (computerChoice === humanChoice) {
-      alert("It's a draw!");
-   }
-
-   if (humanChoice === "rock") {
-      if (computerChoice === "paper") {
-         alert("You lose!");
-         computerScore ++;
-      } else if (computerChoice === "scissors") {
-         alert("You win!");
-         humanScore ++;
+   function playRound (computerChoice, humanChoice) {
+      if (computerChoice === humanChoice) {
+         console.log("It's a draw!");
+      }
+      if (humanChoice === "rock") {
+         if (computerChoice === "paper") {
+            console.log("You lose! Paper beats Rock!");
+            computerScore ++;
+         } else if (computerChoice === "scissors") {
+            console.log("You win! Rock beats Scissors!");
+            humanScore ++;
+         }
+      }
+      if (humanChoice === "paper") {
+         if (computerChoice === "rock") {
+            console.log("You win! Paper beats Rock!");
+            humanScore ++;
+         } else if (computerChoice === "scissors") {
+            console.log("You lose! Scissors beat Paper!");
+            computerScore ++;
+         }
+      }
+      if (humanChoice === "scissors") {
+         if (computerChoice === "rock") {
+            console.log("You lose! Rock beats Scissors!");
+            computerScore ++;
+         } else if (computerChoice === "paper") {
+            console.log("You win! Scissors beat Paper!");
+            humanScore ++;
+         }
       }
    }
 
-   if (humanChoice === "paper") {
-      if (computerChoice === "rock") {
-         alert("You win!");
-         humanScore ++;
-      } else if (computerChoice === "scissors") {
-         alert("You lose!");
-         computerScore ++;
-      }
+   for (let i = 1; i <= 5; i++) {
+      playRound(getComputerChoice(), getHumanChoice());
    }
 
-   if (humanChoice === "scissors") {
-      if (computerChoice === "rock") {
-         alert("You lose!");
-         computerScore ++;
-      } else if (computerChoice === "paper") {
-         alert("You win!");
-         humanScore ++;
-      }
+   if (computerScore == humanScore) {
+      return console.log(`It's a draw! You scored ${humanScore}, and the computer got ${computerScore} as well!`);
+   } else if (computerScore < humanScore) {
+      return console.log(`You are the winner! You got ${humanScore} points, and the machine scored ${computerScore}!`)
+   } else {
+      return console.log(`Oh no, the machine beat you! You scored ${humanScore} points, and the computer got ${computerScore}!`)
    }
 }
 
+console.log(playGame());
